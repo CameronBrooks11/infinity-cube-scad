@@ -38,6 +38,10 @@ two side links and two top links print sideways or upside down, so each has a
 0.2 mm support that ties it to its cubes. Break those after printing, then
 work the cube a few times to free the hinges.
 
+To tune `clearance` and `pin_clearance` for a printer first, print
+[`examples/test_hinge.scad`](examples/test_hinge.scad): two cubes and one hinge, at
+the same size and clearances.
+
 ## Checks
 
 `just test` takes about 3 s on OpenSCAD 2026.10.15. At sizes 12, 14, 20 and
