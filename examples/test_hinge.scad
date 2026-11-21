@@ -17,10 +17,10 @@ part = "none";
 
 // The first bottom hinge, across the gap between the first two cubes of the front row.
 difference() {
-  for (i = [0, 1]) translate(cube_at(i, 0)) chamfered_cube();
-  in_frame(hinges[0]) channel();
+    for (i = [0, 1]) translate(cube_at(i, 0)) chamfered_cube();
+    in_frame(hinges[0]) channel();
 }
 in_frame(hinges[0]) {
-  pins();
-  link();
+    pins();
+    link();
 }
