@@ -20,6 +20,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CUBE = os.path.join(ROOT, "infinity-cube.scad")
 PROBE = os.path.join(ROOT, "tests", "probe.scad")
 SIZES = (12, 14, 20, 30)
+ERRORS = []
 
 
 def solids_and_size(path):
@@ -49,7 +50,13 @@ def render(openscad, scad, out, defines):
     cmd = [openscad, "--hardwarnings", "--export-format", "binstl", "-o", out, "-D", "$fn=48"]
     for name, value in defines.items():
         cmd += ["-D", f"{name}={value}"]
-    return subprocess.run(cmd + [scad], capture_output=True, text=True)
+    result = subprocess.run(cmd + [scad], capture_output=True, text=True)
+    # A failed assert leaves the exit status at 0 and the top level empty, which the
+    # checks below would read as "no contact", so any error or warning fails the run.
+    for line in result.stderr.splitlines():
+        if line.startswith(("ERROR", "WARNING")):
+            ERRORS.append(f"{os.path.basename(scad)} {defines}: {line}")
+    return result
 
 
 def main():
@@ -104,6 +111,8 @@ def main():
         result = render(openscad, CUBE, stl, {"supports": "false"})
         n, _ = solids_and_size(stl)
         report("without supports, cubes and links are all separate", n == 16, f"{n} pieces")
+
+    report("no render printed an error or warning", not ERRORS, "; ".join(ERRORS[:3]) or "none")
 
     print("all checks passed" if not failures else f"{len(failures)} failed")
     sys.exit(1 if failures else 0)
