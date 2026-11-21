@@ -1,1 +1,3 @@
+title: infinity-cube-scad
+description: A print-in-place infinity cube in OpenSCAD, with hinges that scale with the cube
 models: infinity-cube.scad

@@ -54,8 +54,11 @@ the same size and clearances.
 - all 32 pins reach into their links, so no link can fall out;
 - a hinge folds freely to 90°, bottom face to bottom face, and is blocked
   past it;
-- folded, the hinge's two cubes don't overlap.
+- folded, the hinge's two cubes don't overlap;
+- no render prints an error or warning.
 
+`just check` checks the `.scad` files are formatted with
+[topiary](https://github.com/tweag/topiary) 0.8.0; `just fmt` formats them.
 `just images` renders the pictures above.
 
 ## Licence
